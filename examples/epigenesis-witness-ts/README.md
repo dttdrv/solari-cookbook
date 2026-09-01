@@ -3,17 +3,16 @@
 Turn one public NCBI accession into a shareable, independently replayed genome
 provenance capsule.
 
-The example uses each Solari primitive for a distinct part of the evidence
-chain:
+The example uses Solari snapshots and sandboxes for an independently replayed
+evidence chain:
 
-1. A recorded cloud browser retrieves the exact GenBank response bytes from
-   NCBI.
-2. A seed sandbox pins Epigenesis, then becomes a snapshot.
-3. A producer sandbox boots from that snapshot and compiles the bytes into
+1. A seed sandbox pins Epigenesis, retrieves the exact GenBank response bytes
+   from NCBI, then becomes a snapshot.
+2. A producer sandbox boots from that snapshot and compiles the bytes into
    content-addressed GenBank BioIR and feature state.
-4. A separate verifier sandbox boots from the same snapshot, receives the
-   producer artifacts, independently replays both contracts, and serves the
-   public evidence page.
+3. A separate verifier sandbox boots from the same snapshot, recompiles the
+   source, requires byte-identical artifact identities, independently replays
+   both contracts, and serves the public evidence page.
 
 The compiler and validators are from
 [`dttdrv/epigenesis`](https://github.com/dttdrv/epigenesis). The demo pins an
@@ -29,9 +28,8 @@ npm start -- U49845.1
 ```
 
 Open the printed `proof` URL. The page includes the source, compiled artifact,
-feature-state bundle, both sealed validation reports, and the browser
-acquisition replay. Press `Ctrl+C` to destroy the verifier sandbox and close
-the preview.
+feature-state bundle, both sealed validation reports, and the acquisition
+metadata. Press `Ctrl+C` to destroy the verifier sandbox and close the preview.
 
 Only public NCBI accessions are accepted. This example intentionally has no
 upload path for personal or private sequence data.

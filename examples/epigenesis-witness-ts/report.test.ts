@@ -9,8 +9,8 @@ test("builds a verified report and escapes biological metadata", () => {
   const report = buildWitnessReport({
     accession: "TEST.1",
     acquisitionUrl: "https://example.test/record",
-    browserSessionId: "browser-1",
-    replayBytes: 42,
+    sourceBytes: 42,
+    seedSandboxId: "seed-1",
     epigenesisCommit: digest,
     snapshotId: "snapshot-1",
     producerSandboxId: "producer-1",
@@ -29,6 +29,8 @@ test("builds a verified report and escapes biological metadata", () => {
   assert.equal(report.metrics.stateUnits, 1)
   const html = renderReport(report)
   assert.match(html, /independently replayed/)
+  assert.match(html, /Seed sandbox seed-1/)
+  assert.match(html, /Acquired 42 bytes/)
   assert.match(html, /&lt;script&gt;alert\(1\)&lt;\/script&gt;/)
   assert.doesNotMatch(html, /<script>alert\(1\)<\/script>/)
 })
@@ -37,8 +39,8 @@ test("refuses to publish failed replay", () => {
   assert.throws(() => buildWitnessReport({
     accession: "TEST.1",
     acquisitionUrl: "https://example.test",
-    browserSessionId: "browser",
-    replayBytes: 1,
+    sourceBytes: 1,
+    seedSandboxId: "seed",
     epigenesisCommit: digest,
     snapshotId: "snapshot",
     producerSandboxId: "producer",
