@@ -42,3 +42,5 @@ npm run typecheck
 ```
 
 Source: [`index.ts`](index.ts) and [`report.ts`](report.ts)
+
+Verified example: [`LIVE_PROOF.md`](LIVE_PROOF.md)
